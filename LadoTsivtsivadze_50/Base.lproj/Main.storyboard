@@ -22,13 +22,12 @@
                                     <constraint firstAttribute="height" constant="150" id="ess-cN-yhY"/>
                                 </constraints>
                             </pickerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A15-Ck-dHJ">
-                                <rect key="frame" x="20" y="284" width="374" height="558"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLq-uJ-0Uf">
                                 <rect key="frame" x="20" y="234" width="374" height="30"/>
                                 <color key="backgroundColor" red="0.9276903272" green="0.21481503790000001" blue="0.33379275959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="cAh-9V-SMF"/>
+                                </constraints>
                                 <state key="normal" title="Set Time">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -36,24 +35,27 @@
                                     <action selector="onSetTime:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sSS-Ok-FZd"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uEO-sQ-qK9">
+                                <rect key="frame" x="20" y="284" width="374" height="558"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="A15-Ck-dHJ" secondAttribute="bottom" constant="20" id="9Nf-xQ-Zme"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uEO-sQ-qK9" secondAttribute="trailing" constant="20" id="GZQ-fz-fzg"/>
+                            <constraint firstItem="uEO-sQ-qK9" firstAttribute="top" secondItem="uLq-uJ-0Uf" secondAttribute="bottom" constant="20" id="KEO-N9-gTT"/>
                             <constraint firstItem="uLq-uJ-0Uf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LKz-R0-j6z"/>
-                            <constraint firstItem="A15-Ck-dHJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Q3p-YP-rNW"/>
                             <constraint firstItem="uLq-uJ-0Uf" firstAttribute="top" secondItem="Cg1-Q7-4R1" secondAttribute="bottom" constant="20" id="ahG-yT-XMM"/>
+                            <constraint firstItem="uEO-sQ-qK9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dYX-C2-CVb"/>
                             <constraint firstItem="Cg1-Q7-4R1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="eiZ-6o-Ard"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A15-Ck-dHJ" secondAttribute="trailing" constant="20" id="hSr-GZ-LeG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cg1-Q7-4R1" secondAttribute="trailing" constant="20" id="pcg-Uc-2Hi"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="uEO-sQ-qK9" secondAttribute="bottom" constant="20" id="ppS-CM-83N"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uLq-uJ-0Uf" secondAttribute="trailing" constant="20" id="qaa-kg-qYW"/>
-                            <constraint firstItem="A15-Ck-dHJ" firstAttribute="top" secondItem="uLq-uJ-0Uf" secondAttribute="bottom" constant="20" id="rrS-ri-eIa"/>
                             <constraint firstItem="Cg1-Q7-4R1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="vl1-nO-cfE"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="clockView" destination="A15-Ck-dHJ" id="NpO-yt-CJa"/>
+                        <outlet property="imgView" destination="uEO-sQ-qK9" id="glt-od-xSl"/>
                         <outlet property="pickerView" destination="Cg1-Q7-4R1" id="9lO-qS-WEP"/>
                     </connections>
                 </viewController>

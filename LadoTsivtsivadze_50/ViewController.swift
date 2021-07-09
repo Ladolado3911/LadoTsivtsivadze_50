@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreGraphics
 
 enum AmOrPm: String {
     case am = "am"
@@ -21,7 +22,7 @@ struct Time {
 class ViewController: UIViewController {
 
     @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var clockView: UIView!
+    @IBOutlet weak var imgView: UIImageView!
     
     var hours: [Int] = []
     var minutes: [Int] = []
@@ -31,6 +32,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         configPickerView()
         populateClockInfo()
+        setClock()
 
     }
     
@@ -55,6 +57,36 @@ class ViewController: UIViewController {
         let amORpm2: AmOrPm = amORpm[pickerView.selectedRow(inComponent: 2)] == "am" ? .am : .pm
         
         return Time(hour: hour, minute: minute, amORpm: amORpm2)
+    }
+    
+    func setClock() {
+        imgView.image = getClock()
+    }
+    
+    func getClock() -> UIImage {
+        
+        let renderer = UIGraphicsImageRenderer(size: imgView.bounds.size)
+        let image = renderer.image { ctx in
+            
+            let ctx = UIGraphicsGetCurrentContext()
+            let rect = imgView.bounds
+            let center = CGPoint(x: rect.midX, y: rect.midY)
+ 
+            let rad = (rect.width / 2) - 20
+                
+            let endAngle = CGFloat(2 * Double.pi)
+            ctx?.addArc(center: center,
+                        radius: rad,
+                        startAngle: 0,
+                        endAngle: endAngle,
+                        clockwise: false)
+            
+            ctx?.setFillColor(UIColor.gray.cgColor)
+            ctx?.setStrokeColor(UIColor.white.cgColor)
+            ctx?.setLineWidth(4.0)
+            ctx?.drawPath(using: .fillStroke)
+        }
+        return image
     }
     
     @IBAction func onSetTime(_ sender: Any) {
