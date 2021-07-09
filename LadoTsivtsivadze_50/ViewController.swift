@@ -29,7 +29,8 @@ class ViewController: UIViewController {
     var amORpm: [String] = ["am", "pm"]
     var quarters: [CGFloat] = [3.14, 0, 1.57, 4.71]
     
-    //var hourPoint: CGPoint = CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>)
+    var hourAngle: CGFloat = 0
+    var minuteAngle: CGFloat = 4.71
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +65,7 @@ class ViewController: UIViewController {
     }
     
     func setClock() {
+        imgView.image = nil
         imgView.image = getClock()
     }
     
@@ -109,10 +111,11 @@ class ViewController: UIViewController {
                     currentAngle += angle
                 }
             }
-            
+            ctx.cgContext.rotate(by: -1.57)
+            ctx.cgContext.rotate(by: hourAngle)
             addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 90, y: 0))
-            
-            ctx.cgContext.rotate(by: 4.71)
+            ctx.cgContext.rotate(by: -hourAngle)
+            ctx.cgContext.rotate(by: minuteAngle)
             addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 60, y: 0))
 
             ctx.cgContext.drawPath(using: .fillStroke)
@@ -125,14 +128,21 @@ class ViewController: UIViewController {
         ctx.addLine(to: point2)
     }
     
-    func degree2radian(a: CGFloat) -> CGFloat {
-        let b = CGFloat(Double.pi) * a / 180
-        return b
+    func hourToRadian(hour: Int) -> CGFloat {
+        CGFloat(CGFloat(hour) * ((2 * .pi) / 12))
+    }
+    
+    func minuteToRadian(minute: Int) -> CGFloat {
+        CGFloat(CGFloat(minute) * ((2 * .pi) / 60))
     }
     
     @IBAction func onSetTime(_ sender: Any) {
         let selectedTime = getPickerTime()
         print("\(selectedTime.hour): \(selectedTime.minute): \(selectedTime.amORpm.rawValue)")
+        hourAngle = hourToRadian(hour: selectedTime.hour)
+        minuteAngle = minuteToRadian(minute: selectedTime.minute)
+        setClock()
+        
     }
 }
 
