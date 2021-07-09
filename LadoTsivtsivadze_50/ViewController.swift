@@ -37,7 +37,6 @@ class ViewController: UIViewController {
         imgView.backgroundColor = .black
         configPickerView()
         populateClockInfo()
-        addAnimation()
         setClock()
 
     }
@@ -137,21 +136,6 @@ class ViewController: UIViewController {
     func addClockLine(tool ctx: CGContext, starting point1: CGPoint, end point2: CGPoint) {
         ctx.move(to: point1)
         ctx.addLine(to: point2)
-    }
-    
-    func addAnimation() {
-        let animation1 = CABasicAnimation(keyPath: "strokeEnd")
-        animation1.fromValue = 0
-        animation1.toValue = 1
-        animation1.duration = 2
-        
-        let animation2 = CABasicAnimation(keyPath: "strokeStart")
-        animation2.fromValue = 0
-        animation2.toValue = 1
-        animation2.duration = 2
-        
-        imgView.layer.add(animation1, forKey: "line")
-        imgView.layer.add(animation2, forKey: "line")
     }
     
     func hourToRadian(hour: Int) -> CGFloat {
