@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         imgView.backgroundColor = .black
         configPickerView()
         populateClockInfo()
+        addAnimation()
         setClock()
 
     }
@@ -73,8 +74,7 @@ class ViewController: UIViewController {
         
         let renderer = UIGraphicsImageRenderer(size: imgView.bounds.size)
         let image = renderer.image { ctx in
-            
-            //let ctx = UIGraphicsGetCurrentContext()
+
             let rect = imgView.bounds
             let center = CGPoint(x: rect.midX, y: rect.midY)
             let rad = (rect.width / 2) - 20
@@ -89,12 +89,17 @@ class ViewController: UIViewController {
             ctx.cgContext.setFillColor(UIColor.gray.cgColor)
             ctx.cgContext.setStrokeColor(UIColor.white.cgColor)
             ctx.cgContext.setLineWidth(3)
-            //addClockLine(tool: ctx.cgContext, starting: ctx.cgContext.currentPointOfPath )
+            
             let angle = (2 * CGFloat.pi) / 60
             ctx.cgContext.translateBy(x: center.x, y: center.y)
             var currentAngle: CGFloat = 0
             for _ in 1...60 {
                 let current = CGPoint(x: rad, y: 0)
+                
+                if hourAngle > 6.14 {
+                    ctx.cgContext.setFillColor(UIColor.blue.cgColor)
+                }
+                
                 if quarters.contains(CGFloat(Double(round(100 * currentAngle) / 100 ))) {
                     print("Cought")
                     let endPointHigh = CGPoint(x: rad - 35, y: 0)
@@ -115,8 +120,8 @@ class ViewController: UIViewController {
             
             ctx.cgContext.rotate(by: -1.57)
             ctx.cgContext.setStrokeColor(UIColor.green.cgColor)
-            ctx.cgContext.addArc(center: .zero, radius: rad, startAngle: 0, endAngle: hourAngle, clockwise: false)
             
+            ctx.cgContext.addArc(center: .zero, radius: rad, startAngle: 0, endAngle: hourAngle, clockwise: false)
             
             ctx.cgContext.rotate(by: hourAngle)
             addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 90, y: 0))
@@ -132,6 +137,21 @@ class ViewController: UIViewController {
     func addClockLine(tool ctx: CGContext, starting point1: CGPoint, end point2: CGPoint) {
         ctx.move(to: point1)
         ctx.addLine(to: point2)
+    }
+    
+    func addAnimation() {
+        let animation1 = CABasicAnimation(keyPath: "strokeEnd")
+        animation1.fromValue = 0
+        animation1.toValue = 1
+        animation1.duration = 2
+        
+        let animation2 = CABasicAnimation(keyPath: "strokeStart")
+        animation2.fromValue = 0
+        animation2.toValue = 1
+        animation2.duration = 2
+        
+        imgView.layer.add(animation1, forKey: "line")
+        imgView.layer.add(animation2, forKey: "line")
     }
     
     func hourToRadian(hour: Int) -> CGFloat {
@@ -180,6 +200,12 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         default:
             return "None"
         }
+    }
+}
+
+extension ViewController: CAAnimationDelegate {
+    func animationDidStart(_ anim: CAAnimation) {
+        print("Did start anim")
     }
 }
 
