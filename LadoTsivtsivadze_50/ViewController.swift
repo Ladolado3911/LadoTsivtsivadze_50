@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var hours: [Int] = []
     var minutes: [Int] = []
     var amORpm: [String] = ["am", "pm"]
+    var quarters: [CGFloat] = [3.14, 0, 1.57, 4.71]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,19 +84,40 @@ class ViewController: UIViewController {
             
             ctx.cgContext.setFillColor(UIColor.gray.cgColor)
             ctx.cgContext.setStrokeColor(UIColor.white.cgColor)
-            ctx.cgContext.setLineWidth(4.0)
+            ctx.cgContext.setLineWidth(3)
+            //addClockLine(tool: ctx.cgContext, starting: ctx.cgContext.currentPointOfPath )
+            let angle = (2 * CGFloat.pi) / 60
+            ctx.cgContext.translateBy(x: center.x, y: center.y)
+            var currentAngle: CGFloat = 0
+            for _ in 1...60 {
+                let current = CGPoint(x: rad, y: 0)
+                if quarters.contains(CGFloat(Double(round(100 * currentAngle) / 100 ))) {
+                    print("Cought")
+                    let endPointHigh = CGPoint(x: rad - 35, y: 0)
+                    addClockLine(tool: ctx.cgContext, starting: current, end: endPointHigh)
+                    ctx.cgContext.rotate(by: angle)
+                    print(CGFloat(Double(round(100 * currentAngle) / 100 )))
+                    currentAngle += angle
+                }
+                else {
+                    let endPoint = CGPoint(x: rad - 20, y: 0)
+                    addClockLine(tool: ctx.cgContext, starting: current, end: endPoint)
+                    ctx.cgContext.rotate(by: angle)
+                    print(CGFloat(Double(round(100 * currentAngle) / 100 )))
+                    currentAngle += angle
+                }
+            }
             ctx.cgContext.drawPath(using: .fillStroke)
-            addClockLine(tool: ctx.cgContext, starting: CGPoint(x: 100, y: 100) )
-            ctx.cgContext.strokePath()
-            
+            //ctx.cgContext.translateBy(x: center.x, y: center.y)
+//            addClockLine(tool: ctx.cgContext, starting: ctx.cgContext.currentPointOfPath )
+//            ctx.cgContext.strokePath()
         }
         return image
     }
     
-    func addClockLine(tool ctx: CGContext, starting point: CGPoint) {
-        ctx.rotate(by: .pi)
-        ctx.move(to: point)
-        ctx.addLine(to: CGPoint(x: point.x, y: point.y + 20))
+    func addClockLine(tool ctx: CGContext, starting point1: CGPoint, end point2: CGPoint) {
+        ctx.move(to: point1)
+        ctx.addLine(to: point2)
     }
     
     func degree2radian(a: CGFloat) -> CGFloat {
