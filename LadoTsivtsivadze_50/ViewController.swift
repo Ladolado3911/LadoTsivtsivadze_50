@@ -29,6 +29,8 @@ class ViewController: UIViewController {
     var amORpm: [String] = ["am", "pm"]
     var quarters: [CGFloat] = [3.14, 0, 1.57, 4.71]
     
+    //var hourPoint: CGPoint = CGPoint(x: <#T##CGFloat#>, y: <#T##CGFloat#>)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imgView.backgroundColor = .black
@@ -107,10 +109,13 @@ class ViewController: UIViewController {
                     currentAngle += angle
                 }
             }
+            
+            addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 90, y: 0))
+            
+            ctx.cgContext.rotate(by: 4.71)
+            addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 60, y: 0))
+
             ctx.cgContext.drawPath(using: .fillStroke)
-            //ctx.cgContext.translateBy(x: center.x, y: center.y)
-//            addClockLine(tool: ctx.cgContext, starting: ctx.cgContext.currentPointOfPath )
-//            ctx.cgContext.strokePath()
         }
         return image
     }
