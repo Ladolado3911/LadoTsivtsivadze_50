@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imgView.backgroundColor = .black
         configPickerView()
         populateClockInfo()
         setClock()
@@ -84,36 +85,22 @@ class ViewController: UIViewController {
             ctx?.setStrokeColor(UIColor.white.cgColor)
             ctx?.setLineWidth(4.0)
             ctx?.drawPath(using: .fillStroke)
+//            addClockLine(tool: ctx!, starting: .zero)
+//            ctx?.strokePath()
+            
         }
         return image
+    }
+    
+    func addClockLine(tool ctx: CGContext, starting point: CGPoint) {
+        ctx.rotate(by: .pi)
+        ctx.move(to: point)
+        ctx.addLine(to: CGPoint(x: point.x, y: point.y + 20))
     }
     
     func degree2radian(a: CGFloat) -> CGFloat {
         let b = CGFloat(Double.pi) * a / 180
         return b
-    }
-    
-    func drawSecondMarker(ctx: CGContext, x: CGFloat, y: CGFloat, radius: CGFloat, color: UIColor) {
-        // generate a path
-        let path = CGMutablePath()
-        // move to starting point on edge of circle
-        //CGPathMoveToPoint(path, nil, radius, 0)
-        path.move(to: .zero)
-
-        // draw line of required length
-        //CGPathAddLineToPoint(path, nil, x, y)
-        path.move(to: CGPoint(x: x, y: y))
-        // close subpath
-        path.closeSubpath()
-        //CGPathCloseSubpath(path)
-        // add the path to the context
-        ctx.addPath(path)
-        // set the line width
-        ctx.setLineWidth(1.5)
-        // set the line color
-        ctx.setStrokeColor(color.cgColor)
-        // draw the line
-        ctx.strokePath()
     }
     
     @IBAction func onSetTime(_ sender: Any) {
