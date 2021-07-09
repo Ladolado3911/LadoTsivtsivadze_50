@@ -69,24 +69,24 @@ class ViewController: UIViewController {
         let renderer = UIGraphicsImageRenderer(size: imgView.bounds.size)
         let image = renderer.image { ctx in
             
-            let ctx = UIGraphicsGetCurrentContext()
+            //let ctx = UIGraphicsGetCurrentContext()
             let rect = imgView.bounds
             let center = CGPoint(x: rect.midX, y: rect.midY)
             let rad = (rect.width / 2) - 20
                 
             let endAngle = CGFloat(2 * Double.pi)
-            ctx?.addArc(center: center,
+            ctx.cgContext.addArc(center: center,
                         radius: rad,
                         startAngle: 0,
                         endAngle: endAngle,
                         clockwise: false)
             
-            ctx?.setFillColor(UIColor.gray.cgColor)
-            ctx?.setStrokeColor(UIColor.white.cgColor)
-            ctx?.setLineWidth(4.0)
-            ctx?.drawPath(using: .fillStroke)
-//            addClockLine(tool: ctx!, starting: .zero)
-//            ctx?.strokePath()
+            ctx.cgContext.setFillColor(UIColor.gray.cgColor)
+            ctx.cgContext.setStrokeColor(UIColor.white.cgColor)
+            ctx.cgContext.setLineWidth(4.0)
+            ctx.cgContext.drawPath(using: .fillStroke)
+            addClockLine(tool: ctx.cgContext, starting: CGPoint(x: 100, y: 100) )
+            ctx.cgContext.strokePath()
             
         }
         return image
