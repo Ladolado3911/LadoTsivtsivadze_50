@@ -71,7 +71,6 @@ class ViewController: UIViewController {
             let ctx = UIGraphicsGetCurrentContext()
             let rect = imgView.bounds
             let center = CGPoint(x: rect.midX, y: rect.midY)
- 
             let rad = (rect.width / 2) - 20
                 
             let endAngle = CGFloat(2 * Double.pi)
@@ -87,6 +86,34 @@ class ViewController: UIViewController {
             ctx?.drawPath(using: .fillStroke)
         }
         return image
+    }
+    
+    func degree2radian(a: CGFloat) -> CGFloat {
+        let b = CGFloat(Double.pi) * a / 180
+        return b
+    }
+    
+    func drawSecondMarker(ctx: CGContext, x: CGFloat, y: CGFloat, radius: CGFloat, color: UIColor) {
+        // generate a path
+        let path = CGMutablePath()
+        // move to starting point on edge of circle
+        //CGPathMoveToPoint(path, nil, radius, 0)
+        path.move(to: .zero)
+
+        // draw line of required length
+        //CGPathAddLineToPoint(path, nil, x, y)
+        path.move(to: CGPoint(x: x, y: y))
+        // close subpath
+        path.closeSubpath()
+        //CGPathCloseSubpath(path)
+        // add the path to the context
+        ctx.addPath(path)
+        // set the line width
+        ctx.setLineWidth(1.5)
+        // set the line color
+        ctx.setStrokeColor(color.cgColor)
+        // draw the line
+        ctx.strokePath()
     }
     
     @IBAction func onSetTime(_ sender: Any) {
