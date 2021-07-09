@@ -111,14 +111,20 @@ class ViewController: UIViewController {
                     currentAngle += angle
                 }
             }
+            ctx.cgContext.drawPath(using: .fillStroke)
+            
             ctx.cgContext.rotate(by: -1.57)
+            ctx.cgContext.setStrokeColor(UIColor.green.cgColor)
+            ctx.cgContext.addArc(center: .zero, radius: rad, startAngle: 0, endAngle: hourAngle, clockwise: false)
+            
+            
             ctx.cgContext.rotate(by: hourAngle)
             addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 90, y: 0))
             ctx.cgContext.rotate(by: -hourAngle)
             ctx.cgContext.rotate(by: minuteAngle)
             addClockLine(tool: ctx.cgContext, starting: .zero, end: CGPoint(x: rad - 60, y: 0))
 
-            ctx.cgContext.drawPath(using: .fillStroke)
+            ctx.cgContext.strokePath()
         }
         return image
     }
@@ -142,7 +148,6 @@ class ViewController: UIViewController {
         hourAngle = hourToRadian(hour: selectedTime.hour)
         minuteAngle = minuteToRadian(minute: selectedTime.minute)
         setClock()
-        
     }
 }
 
